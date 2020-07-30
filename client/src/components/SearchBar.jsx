@@ -15,12 +15,7 @@ class SearchBar extends Component {
   }
 
   fetchCountryList() {
-    fetch('/help/countries?format=json', {
-      headers: {
-        'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-        'x-rapidapi-key': 'fe19d920b6mshda2e13a544d46e0p1c15edjsn637f024a0cdd',
-      },
-    })
+    fetch('/api/countries')
       .then(response => response.text())
       .then(data => JSON.parse(data))
       .then(countries => countries.map(cntry => cntry.name))

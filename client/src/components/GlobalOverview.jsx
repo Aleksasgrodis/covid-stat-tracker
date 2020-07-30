@@ -1,18 +1,28 @@
 import React from 'react';
 import moment from 'moment';
 import CountUp from 'react-countup';
-import netherlands from '../db';
 import { Line } from 'react-chartjs-2';
+import netherlands from '../db';
+import diff from '../daily-diff';
 import './GlobalOverview.scss';
 
+const totalNewConfirmed = diff.map(a => a.new_cases).reduce((p, c) => p + c, 0);
+const totalNewRecovered = diff.map(a => a.new_recovered).reduce((p, c) => p + c, 0);
+const totalNewDeaths = diff.map(a => a.new_deaths).reduce((p, c) => p + c, 0);
+
+const filteredData = netherlands.filter((a, i) => i % 7 === 0);
+console.log(filteredData);
+
 const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: filteredData
+    .map(a => moment(a.last_update).format('DD/MMM'))
+    .reverse(),
   datasets: [
     {
-      label: 'My First dataset',
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: 'rgba(75,192,192,0.4)',
+      label: 'Confirmed Cases',
+      fill: true,
+      lineTension: 0.9,
+      backgroundColor: 'rgba(75,192,192,0.5)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',
       borderDash: [],
@@ -27,7 +37,49 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40]
+      data: filteredData.map(a => a.total_cases).reverse(),
+    },
+    {
+      label: 'Recovered',
+      fill: true,
+      lineTension: 0.1,
+      backgroundColor: 'rgba(24,255,19,0.4)',
+      borderColor: 'rgba(24,255,19,1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'rgba(75,192,192,1)',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: filteredData.map(a => a.total_recovered).reverse(),
+    },
+    {
+      label: 'Deaths',
+      fill: true,
+      lineTension: 0.1,
+      backgroundColor: 'rgba(244,15,19,0.4)',
+      borderColor: 'rgba(244,15,19,1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'rgba(75,192,192,1)',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: filteredData.map(a => a.total_deaths).reverse(),
     },
   ],
 };
@@ -46,14 +98,8 @@ class GlobalOverview extends React.Component {
   }
 
   fetchGlobalData() {
-    fetch('/totals?format=json', {
-      headers: {
-        'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-        'x-rapidapi-key': 'fe19d920b6mshda2e13a544d46e0p1c15edjsn637f024a0cdd',
-      },
-    })
+    fetch('/api/total')
       .then(response => response.text())
-      // .then(data => this.setState({ statistics: data }));
       .then(data => this.setState({ statistics: JSON.parse(data)[0] }))
       .catch(err => console.log(err));
   }
@@ -81,6 +127,14 @@ class GlobalOverview extends React.Component {
               duration={3.25}
               separator=","
             />
+            <span className="difference">
+              +
+              {totalNewConfirmed}
+              {' '}
+              (+
+              {((totalNewConfirmed * 100) / statistics.confirmed).toString().substr(0, 4) }
+              %)
+            </span>
           </span>
           <h4>Confirmed</h4>
         </div>
@@ -92,6 +146,14 @@ class GlobalOverview extends React.Component {
               duration={3.25}
               separator=","
             />
+            <span className="difference">
+              {' '}
+              +
+              {totalNewRecovered}
+              (+
+              {((totalNewRecovered * 100) / statistics.recovered).toString().substr(0, 4) }
+              %)
+            </span>
           </span>
           <h4>Recovered</h4>
         </div>
@@ -103,6 +165,14 @@ class GlobalOverview extends React.Component {
               duration={3.25}
               separator=","
             />
+            <span className="difference">
+              {' '}
+              +
+              {totalNewDeaths}
+              (+
+              {((totalNewDeaths * 100) / statistics.deaths).toString().substr(0, 4) }
+              %)
+            </span>
           </span>
           <h4>Deaths</h4>
         </div>

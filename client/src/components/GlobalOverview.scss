@@ -2,6 +2,10 @@
   .statistic {
     span {
       font-size: 1.5em;
+      &.difference {
+        font-size: 0.6em;
+        display: block;
+      }
     }
     &.confirmed {
       span {

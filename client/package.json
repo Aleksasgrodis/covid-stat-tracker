@@ -42,5 +42,5 @@
     "eslint": "^6.6.0",
     "eslint-config-salt": "^1.0.1"
   },
-  "proxy": "https://covid-19-data.p.rapidapi.com"
+  "proxy": "http://localhost:3001"
 }

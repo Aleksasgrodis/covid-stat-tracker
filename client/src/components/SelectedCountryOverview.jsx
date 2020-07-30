@@ -33,13 +33,7 @@ class SelectedCountryOverview extends Component {
 
   fetchCountryData(country) {
     this.setState({ country: this.props.selected });
-    fetch(`/country?format=json&name=${country}`, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-        'x-rapidapi-key': 'fe19d920b6mshda2e13a544d46e0p1c15edjsn637f024a0cdd',
-      },
-    })
+    fetch(`/api/countries/${country}`)
       .then(response => response.text())
       .then(data => JSON.parse(data))
       .then(countryStats => this.setState({ countryData: countryStats[0] }))
