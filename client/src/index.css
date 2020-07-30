@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300&display=swap');
 body {
-  margin: 0;
+  margin: 10px;
   font-family: 'Recursive', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12,3 +12,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+

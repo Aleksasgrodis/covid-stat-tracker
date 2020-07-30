@@ -1,51 +1,37 @@
 import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import countries from '../countryList';
+import './SearchBar.scss';
 
-const SearchBar = ({ setParentState }) => {
-  const [countryList, setCountryList] = useState(countries);
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     countryList: null,
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.fetchCountryList();
-  //   }, 2000);
-  // }
-
-  // remove fetch, use DB
-  // fetchCountryList() {
-  //   fetch('/api/countries')
-  //     .then(response => response.text())
-  //     .then(data => JSON.parse(data))
-  //     .then(countries => countries.map(cntry => cntry.name))
-  //     .then(filtered => this.setState({ countryList: filtered }))
-  //     .catch(err => console.log(err));
-  // }
-
-  const handleSelectChange = event => {
-    const { value } = event.target;
+function SearchBar({ setParentState }) {
+  const handleSelectChange = value => {
     // const { setParentState } = this.props;
     setParentState(value);
   };
-
-  // const { countryList } = this.state;
   return (
-    <select
-      name="country"
-      id="country"
-      onChange={event => handleSelectChange(event)}
-    >
-      {countryList ? (
-        countryList.map(country => <option value={country.name}>{country.name}</option>)
-      ) : (
-        <h2>asd</h2>
-      )}
-    </select>
+    <div className="search-bar">
+      <Autocomplete
+        onChange={event => console.log(event.target.value)}
+        id="combo-box-demo"
+        options={countries}
+        style={{ borderRadius: 5 }}
+        getOptionLabel={option => option.name}
+        onInputChange={(event, newInputValue) => {
+          handleSelectChange(newInputValue);
+        }}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Filter by country"
+            variant="filled"
+            color="secondary"
+            style={{ background: '#fff', color: 'secondary', borderRadius: 5 }}
+          />
+        )}
+      />
+    </div>
   );
-};
+}
 
 export default SearchBar;

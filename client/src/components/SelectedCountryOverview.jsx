@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { Pie } from 'react-chartjs-2';
+import moment from 'moment';
+import CountUp from 'react-countup';
+import './SelectedCountryOverview.scss';
 
-const data = {
-  labels: ['Confirmed', 'Recovered', 'Deaths'],
-  datasets: [
-    {
-      data: [17255093, 10740492, 672425],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-      hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-    },
-  ],
-};
+import { Doughnut, defaults, Pie } from 'react-chartjs-2';
+
+defaults.global.legend.display = false;
 class SelectedCountryOverview extends Component {
   constructor(props) {
     super(props);
@@ -20,12 +15,22 @@ class SelectedCountryOverview extends Component {
     };
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
     const { selected } = this.props;
-    console.log(prevProps, prevState);
-    console.log(this.props, this.state);
+    this.fetchCountryData(selected);
+    setTimeout(() => {
+      if (!this.state.countryData) {
+        this.handleDataNotFound();
+      }
+    }, 3500);
+  }
+
+  handleDataNotFound(){
+    this.props.resetSelect()
+  }
+
+  componentDidUpdate() {
+    const { selected } = this.props;
     if (this.props.selected !== this.state.country) {
       this.fetchCountryData(selected);
     }
@@ -45,29 +50,109 @@ class SelectedCountryOverview extends Component {
   render() {
     const { countryData } = this.state;
     return countryData ? (
-      <>
-        <h1>confirmed total: {countryData.confirmed}</h1>
-        <h1>country: {countryData.country}</h1>
-        <h1>critical: {countryData.critical}</h1>
-        <h1>deaths: {countryData.deaths}</h1>
-        <h1>recovered: {countryData.recovered}</h1>
-        <h1>country: {countryData.lastChange}</h1>
+      <section className="global-overview selected">
+        <h1><button onClick={ event=> this.props.resetSelect()}><i className="fa fa-angle-left" aria-hidden="true"></i></button>{countryData.country}</h1>
+        <span className="last-update">
+          
+          {moment(countryData.lastChange).format('MMMM Do, HH:MM A')}
+        </span>
         <Pie
           data={{
             labels: ['Confirmed', 'Recovered', 'Deaths'],
             datasets: [
               {
-                data: [countryData.confirmed, countryData.recovered, countryData.deaths],
-                backgroundColor: ['#fff', '#b9ffb7', '#d62828'],
+                data: [
+                  countryData.confirmed,
+                  countryData.recovered,
+                  countryData.deaths,
+                ],
+                backgroundColor: ['#444', '#b9ffb7', '#d62828'],
                 hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
               },
             ],
           }}
+          height={55}
+          width={55}
         />
-      </>
+        <div className="single">
+        <div className="statistic-group">
+        <div className="statistic confirmed">
+          <span>
+            <CountUp
+              start={0}
+              end={countryData.confirmed}
+              duration={3.25}
+              separator=","
+            />
+            {/* <span className="difference">
+              +{totalNewConfirmed} (+
+              {((totalNewConfirmed * 100) / statistics.confirmed)
+                .toString()
+                .substr(0, 4)}
+              %)
+            </span> */}
+          </span>
+          <h3>Confirmed</h3>
+        </div>
+        <div className="statistic recovered">
+          <span>
+            <CountUp
+              start={0}
+              end={countryData.recovered}
+              duration={3.25}
+              separator=","
+            />
+            {/* <span className="difference">
+                {' '}
+                +{totalNewRecovered}
+                (+
+                {((totalNewRecovered * 100) / statistics.recovered)
+                  .toString()
+                  .substr(0, 4)}
+                %)
+              </span> */}
+          </span>
+          <h3>Recovered</h3>
+        </div>
+        </div>
+        <div className="statistic-group">
+          <div className="statistic deaths">
+            <span>
+              <CountUp
+                start={0}
+                end={countryData.deaths}
+                duration={3.25}
+                separator=","
+              />
+              {/* <span className="difference">
+                  {' '}
+                  +{totalNewDeaths}
+                  (+
+                  {((totalNewDeaths * 100) / statistics.deaths)
+                    .toString()
+                    .substr(0, 4)}
+                  %)
+                </span> */}
+            </span>
+            <h3>Deaths</h3>
+          </div>
+          <div className="statistic critical">
+            <span>
+              <CountUp
+                start={0}
+                end={countryData.critical}
+                duration={3.25}
+                separator=","
+              />
+            </span>
+            <h3>Critical</h3>
+          </div>
+        </div>
+        </div>
+      </section>
     ) : (
       <>
-        <h2>select country to view</h2>
+        <h2>LOADING</h2>
       </>
     );
   }

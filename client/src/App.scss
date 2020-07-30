@@ -1,0 +1,152 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.global-overview {
+  display: flex;
+  // flex-wrap: wrap;
+  flex-direction: column;
+  align-items: right;
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 0;
+    // text-align: center;
+  }
+  .last-update {
+    margin-bottom: 20px;
+  }
+
+  &.selected {
+    h1 {
+      button {
+        background: none;
+        border: none;
+        font-size: 1em;
+        color:white;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .single {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 30px;
+    // align-content: space-between;
+    .statistic-group {
+      display: flex;
+      justify-content: space-evenly;
+      .statistic {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+    }
+  }
+
+  .statistic {
+    margin-bottom: 20px;
+    h3 {
+      margin: 10px 0;
+    }
+    span {
+      font-size: 1.5em;
+      // margin: 0;
+      display: inline;
+      
+      &.difference {
+        font-size: 0.6em;
+        display: block;
+      }
+    }
+    &.confirmed {
+      
+      span {
+        color: white;
+      }
+    }
+    &.recovered {
+      span {
+        color: #b9ffb7;
+      }
+    }
+    &.deaths {
+      span {
+        color: #d62828;
+      }
+    }
+    &.critical {
+      span {
+        color: #f77f00;
+      }
+    }
+
+  }
+
+
+
+  div.statistic-group {
+    display: flex;
+    justify-content: space-between;
+
+    .statistic {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &.deaths {
+        span {
+          color: #d62828;
+        }
+      }
+      &.critical {
+        span {
+          color: #f77f00;
+        }
+      }
+    }
+  }
+  .graph {
+    width: 80vw;
+  }
+}
+
+canvas {
+  background-color: rgb(41, 32, 58);
+}

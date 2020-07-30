@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import GlobalOverview from './components/GlobalOverview';
 import SearchBar from './components/SearchBar';
 import SelectedCountryOverview from './components/SelectedCountryOverview';
+import NewsFeed from './components/NewsFeed';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends Component {
       selectedCountry: null,
     };
     this.childStateChangeHandler = this.childStateChangeHandler.bind(this);
+    this.resetSelectHandler = this.resetSelectHandler.bind(this);
   }
 
   childStateChangeHandler(country) {
@@ -21,20 +23,22 @@ class App extends Component {
   // console.log(`say something`);
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     selectedCountry: 'nigeria',
-  //   });
-  // }
+  resetSelectHandler() {
+    this.setState({
+      selectedCountry: null,
+    });
+  }
 
   render() {
     const { selectedCountry } = this.state;
     return (
       <>
         <SearchBar setParentState={this.childStateChangeHandler} />
-        <h1>Global Overview</h1>
-        <GlobalOverview />
-        <SelectedCountryOverview selected={selectedCountry} />
+        { selectedCountry
+          ? <SelectedCountryOverview selected={selectedCountry}
+           resetSelect={this.resetSelectHandler}/>
+          : <GlobalOverview />}
+        <NewsFeed />
       </>
     );
   }
