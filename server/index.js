@@ -20,7 +20,10 @@ app.get('/api/total', (req, res) => {
   })
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      res.end()
+    });
 })
 
 app.get('/api/countries', (req, res) => {
@@ -32,7 +35,10 @@ app.get('/api/countries', (req, res) => {
   })
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      res.end()
+    });
 })
 
 app.get('/api/countries/:name', (req, res) => {
@@ -44,7 +50,10 @@ app.get('/api/countries/:name', (req, res) => {
   })
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      res.end()
+    });
 })
 
 // app.get('/api/news', (req, res) => {
@@ -68,6 +77,17 @@ app.get('/api/news', async (req, res) => {
   // fetch(`http://newsapi.org/v2/top-headlines?q=Covid&from=2020-07-30&sortBy=popularity&apiKey=${process.env.NEWS_API_KEY}`)
   //   .then(response => response.json())
   //   .then(data => res.json(data));
+})
+
+app.get('/api/diff/:country', (req, res) => {
+  const { country } = req.params;
+  fetch(`https://covid19-api.org/api/diff/${country}`)
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      console.log(err)
+      res.end()
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

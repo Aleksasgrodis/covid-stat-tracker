@@ -23,6 +23,7 @@ class SelectedCountryOverview extends Component {
     this.state = {
       countryData: null,
       country: null,
+      countryDataDiff: null,
     };
   }
 
@@ -45,6 +46,9 @@ class SelectedCountryOverview extends Component {
     if (this.props.selected !== this.state.country) {
       this.fetchCountryData(selected);
     }
+    if (this.state.countryData && !this.state.countryDataDiff) {
+      this.fetchCountryDailyDiff(this.state.countryData.code);
+    }
   }
 
   fetchCountryData(country) {
@@ -58,8 +62,16 @@ class SelectedCountryOverview extends Component {
       });
   }
 
+  fetchCountryDailyDiff(countryCode) {
+    fetch(`/api/diff/${countryCode}`)
+      .then(res => res.text())
+      .then(ress => JSON.parse(ress))
+      .then(data => this.setState({ countryDataDiff: data }))
+      .catch(err => console.log(err));
+  }
+
   render() {
-    const { countryData } = this.state;
+    const { countryData, countryDataDiff } = this.state;
     return countryData ? (
       <section className="global-overview selected">
         <h1>
@@ -101,13 +113,9 @@ class SelectedCountryOverview extends Component {
                   duration={3.25}
                   separator=","
                 />
-                {/* <span className="difference">
-              +{totalNewConfirmed} (+
-              {((totalNewConfirmed * 100) / statistics.confirmed)
-                .toString()
-                .substr(0, 4)}
-              %)
-            </span> */}
+                <span className="difference">
+                  { countryDataDiff ? `+${countryDataDiff.new_cases} (+${countryDataDiff.new_cases_percentage}%)` : null }
+                </span>
               </span>
               <h3>Confirmed</h3>
             </div>
@@ -119,15 +127,9 @@ class SelectedCountryOverview extends Component {
                   duration={3.25}
                   separator=","
                 />
-                {/* <span className="difference">
-                {' '}
-                +{totalNewRecovered}
-                (+
-                {((totalNewRecovered * 100) / statistics.recovered)
-                  .toString()
-                  .substr(0, 4)}
-                %)
-              </span> */}
+                <span className="difference">
+                  { countryDataDiff ? `+${countryDataDiff.new_recovered} (+${countryDataDiff.new_recovered_percentage}%)` : null }
+                </span>
               </span>
               <h3>Recovered</h3>
             </div>
@@ -141,15 +143,9 @@ class SelectedCountryOverview extends Component {
                   duration={3.25}
                   separator=","
                 />
-                {/* <span className="difference">
-                  {' '}
-                  +{totalNewDeaths}
-                  (+
-                  {((totalNewDeaths * 100) / statistics.deaths)
-                    .toString()
-                    .substr(0, 4)}
-                  %)
-                </span> */}
+                <span className="difference">
+                { countryDataDiff ? `+${countryDataDiff.new_deaths} (+${countryDataDiff.new_deaths_percentage}%)` : null }
+                </span>
               </span>
               <h3>Deaths</h3>
             </div>
