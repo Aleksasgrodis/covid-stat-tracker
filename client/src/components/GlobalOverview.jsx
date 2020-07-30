@@ -162,9 +162,9 @@ class GlobalOverview extends React.Component {
               />
               <span className="difference">
                 {' '}
-                +{totalNewRecovered}
+                +{totalNewRecovered}&nbsp;
                 (+
-                {((totalNewRecovered * 100) / statistics.recovered)
+                { ((totalNewRecovered * 100) / statistics.recovered)
                   .toString()
                   .substr(0, 4)}
                 %)
@@ -183,9 +183,9 @@ class GlobalOverview extends React.Component {
                 />
                 <span className="difference">
                   {' '}
-                  +{totalNewDeaths}
-                  (+
-                  {((totalNewDeaths * 100) / statistics.deaths)
+                  +{totalNewDeaths}&nbsp;
+                   (+
+                  { ((totalNewDeaths * 100) / statistics.deaths)
                     .toString()
                     .substr(0, 4)}
                   %)

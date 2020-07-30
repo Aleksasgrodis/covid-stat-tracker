@@ -100,7 +100,7 @@ class SelectedCountryOverview extends Component {
                   countryData.recovered,
                   countryData.deaths,
                 ],
-                backgroundColor: ['#aaa', '#b9ffb7', '#ff4f4f'],
+                backgroundColor: ['#b4eaf5', '#b9ffb7', '#ff4f4f'],
                 hoverBackgroundColor: ['#fff', '#fff', '#fff'],
               },
             ],

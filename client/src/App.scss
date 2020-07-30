@@ -59,7 +59,7 @@
         background: none;
         border: none;
         font-size: 1em;
-        color:white;
+        color: white;
         margin-right: 10px;
       }
     }
@@ -92,39 +92,57 @@
       font-size: 1.5em;
       // margin: 0;
       display: inline;
-      
+
       &.difference {
         font-size: 0.6em;
         display: block;
       }
     }
     &.confirmed {
-      
       span {
+        color: #b4eaf5;
+      }
+      span.difference {
         color: white;
-        
+      }
+      h3 {
+        color: #b4eaf5;
       }
     }
     &.recovered {
       span {
         color: #b9ffb7;
       }
+      span.difference {
+        color: white;
+      }
+      h3 {
+          color: #b9ffb7;
+        }
     }
     &.deaths {
       span {
         color: #ff4f4f;
-        
+      }
+      span.difference {
+        color: white;
+      }
+      h3 {
+        color: #ff4f4f;
       }
     }
     &.critical {
       span {
         color: #f77f00;
       }
+      span.difference {
+        color: white;
+      }
+      h3 {
+        color: #f77f00;
+      }
     }
-
   }
-
-
 
   div.statistic-group {
     display: flex;
@@ -134,14 +152,40 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      &.confirmed {
+        span {
+          color: #b4eaf5;
+        }
+        span.difference {
+          color: white;
+        }
+        h3 {
+          color: #b4eaf5;
+        }
+      }
+      &.recovered {
+        span {
+          color: #b9ffb7;
+        }
+        span.difference {
+          color: white;
+        }
+      }
       &.deaths {
         span {
           color: #ff4f4f;
+        }
+        span.difference {
+          color: white;
         }
       }
       &.critical {
         span {
           color: #f77f00;
+        }
+        span.difference {
+          color: white;
         }
       }
     }
