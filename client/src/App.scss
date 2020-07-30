@@ -41,7 +41,8 @@
   display: flex;
   // flex-wrap: wrap;
   flex-direction: column;
-  align-items: right;
+  // align-items: right;
+  justify-content: center;
 
   h1 {
     font-size: 2em;
@@ -82,6 +83,7 @@
   }
 
   .statistic {
+    // margin: 0 10px;
     margin-bottom: 20px;
     h3 {
       margin: 10px 0;

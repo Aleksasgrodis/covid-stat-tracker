@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
+import PulseLoader from 'react-spinners/PulseLoader';
+import { css } from '@emotion/core';
 import './NewsFeed.scss';
+
+const override = css`
+  display: block;
+  margin: 50px auto;
+  border-color: red;
+  width: 90px;
+`;
 
 export default class NewsFeed extends React.Component {
   constructor(props) {
@@ -28,12 +37,15 @@ export default class NewsFeed extends React.Component {
             <a href={article.url}>
               <article className="article">
                 <h5>{article.title}</h5>
-                {/* <p>{article.description}</p> */}
-                <p>{moment(article.created).format('DD/MM/YYYY')}</p>
+                <div className="details">
+                <span className="publisher">- {article.publisher}</span>
+                <span className="date">{moment(article.created).format('DD/MM/YYYY')}</span>
+
+                </div>
               </article>
             </a>
           ))
-          : null}
+          : <PulseLoader css={override} color="white" size={25} />}
       </section>
     );
   }

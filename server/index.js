@@ -1,15 +1,14 @@
 require('dotenv').config();
-const express = require('express')
+const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const googleNewsAPI = require('google-news-json');
-const app = express()
+const app = express();
 const port = 3001;
 
 app.use(bodyParser.json());
 app.use(cors());
-
 
 app.get('/api/total', (req, res) => {
   fetch(`https://${process.env.API_HOST}/totals?format=json`, {
@@ -21,10 +20,10 @@ app.get('/api/total', (req, res) => {
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
     .catch(err => {
-      console.log(err)
-      res.end()
+      console.log(err);
+      res.end();
     });
-})
+});
 
 app.get('/api/countries', (req, res) => {
   fetch(`https://${process.env.API_HOST}/help/countries?format=json`, {
@@ -36,25 +35,28 @@ app.get('/api/countries', (req, res) => {
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
     .catch(err => {
-      console.log(err)
-      res.end()
+      console.log(err);
+      res.end();
     });
-})
+});
 
 app.get('/api/countries/:name', (req, res) => {
-  fetch(`https://${process.env.API_HOST}/country?format=json&name=${req.params.name}`, {
-    headers: {
-      'x-rapidapi-host': process.env.API_HOST,
-      'x-rapidapi-key': process.env.API_KEY,
+  fetch(
+    `https://${process.env.API_HOST}/country?format=json&name=${req.params.name}`,
+    {
+      headers: {
+        'x-rapidapi-host': process.env.API_HOST,
+        'x-rapidapi-key': process.env.API_KEY,
+      },
     },
-  })
+  )
     .then(response => response.text())
     .then(data => res.json(JSON.parse(data)))
     .catch(err => {
-      console.log(err)
-      res.end()
+      console.log(err);
+      res.end();
     });
-})
+});
 
 // app.get('/api/news', (req, res) => {
 //   fetch(`http://newsapi.org/v2/top-headlines?q=Covid&from=2020-07-30&sortBy=popularity&apiKey=${process.env.NEWS_API_KEY}`)
@@ -64,20 +66,34 @@ app.get('/api/countries/:name', (req, res) => {
 
 app.get('/api/news', async (req, res) => {
   try {
-    const { items } = await googleNewsAPI.getNews(googleNewsAPI.TOP_NEWS, "covid", "en-GB")
-  // const items = await items.filter((a, i) => i < 15);
-  res.json({
-    articles: items
-  })
-  } catch(err) {
+    const { items } = await googleNewsAPI.getNews(
+      googleNewsAPI.TOP_NEWS,
+      'covid',
+      'en-GB',
+    );
+    // const items = await items.filter((a, i) => i < 15);
+    
+
+    res.json({
+      articles: items.map(a => {
+        const [ title, publisher ] = a.title.split(' - ');
+        return {
+          title,
+          publisher,
+          url: a.url,
+          created: a.created,
+        }
+      })
+    });
+  } catch (err) {
     console.log(err);
     res.end();
   }
-  
+
   // fetch(`http://newsapi.org/v2/top-headlines?q=Covid&from=2020-07-30&sortBy=popularity&apiKey=${process.env.NEWS_API_KEY}`)
   //   .then(response => response.json())
   //   .then(data => res.json(data));
-})
+});
 
 app.get('/api/diff/:country', (req, res) => {
   const { country } = req.params;
@@ -85,9 +101,11 @@ app.get('/api/diff/:country', (req, res) => {
     .then(response => response.json())
     .then(data => res.json(data))
     .catch(err => {
-      console.log(err)
-      res.end()
-    })
-})
+      console.log(err);
+      res.end();
+    });
+});
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+app.listen(port, () =>
+  console.log(`Example app listening at http://localhost:${port}`),
+);

@@ -205,14 +205,8 @@ class GlobalOverview extends React.Component {
               <h3>Critical Condition</h3>
             </div>
           </div>
-          {/* <div className="statistic last-change">
-            <p>
-              Last Update:{' '}
-              {moment(statistics.lastChange).format('MMMM Do, HH:MM A')}
-            </p>
-          </div> */}
         </section>
-        <div className="graph">{/* <Line data={data} options={{}} /> */}</div>
+        {/* <div className="graph"><Line data={data} options={{}} /></div> */}
       </>
     ) : (
       <PulseLoader css={override} color="white" size={25} />
