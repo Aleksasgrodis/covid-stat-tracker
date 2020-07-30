@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class GlobalOverview extends React.Component {
   constructor(props) {
@@ -38,7 +39,30 @@ class GlobalOverview extends React.Component {
     // } = this.state;
     // return this.statistics ? {confirmed} : <h2>loading</h2>
     const { statistics } = this.state;
-    return statistics ? <h2>{statistics.confirmed}</h2> : <h2>theyre not</h2>;
+    return statistics ? (
+      <>
+        <h2>
+          confirmed:
+          {statistics.confirmed}
+        </h2>
+        <h2>
+          recovered:
+          {statistics.recovered}
+        </h2>
+        <h2>
+          deaths:
+          {statistics.deaths}
+        </h2>
+        <h2>
+          critical:
+          {statistics.critical}
+        </h2>
+        <h2>
+          Last change:
+          {moment(statistics.lastChange).format('MMMM Do, HH:MM A')}
+        </h2>
+      </>
+    ) : <h2>theyre not</h2>;
   }
 }
 
