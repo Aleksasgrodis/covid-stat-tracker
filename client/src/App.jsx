@@ -28,13 +28,13 @@ class App extends Component {
   // }
 
   render() {
-    // const { selectedCountry } = this.state;
+    const { selectedCountry } = this.state;
     return (
       <>
         <SearchBar setParentState={this.childStateChangeHandler} />
         <h1>hello, i am app</h1>
         <GlobalOverview />
-        <SelectedCountryOverview />
+        <SelectedCountryOverview selected={selectedCountry} />
       </>
     );
   }
