@@ -89,12 +89,12 @@
       margin: 10px 0;
     }
     span {
-      font-size: 1.5em;
+      font-size: 1.55em;
       // margin: 0;
       display: inline;
 
       &.difference {
-        font-size: 0.6em;
+        font-size: 0.75em;
         display: block;
       }
     }
@@ -104,6 +104,7 @@
       }
       span.difference {
         color: white;
+
       }
       h3 {
         color: #b4eaf5;
@@ -194,9 +195,9 @@
       &.critical {
         span {
           color: #f77f00;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+          // display: flex;
+          // flex-direction: column;
+          // align-items: center;
         }
         span.difference {
           color: white;
