@@ -7,7 +7,9 @@ import './SearchBar.scss';
 function SearchBar({ setParentState }) {
   const handleSelectChange = value => {
     // const { setParentState } = this.props;
-    setParentState(value);
+    if (countries.map(a => a.name.toLowerCase()).includes(value.toLowerCase())) {
+      setParentState(value);
+    }
   };
   return (
     <div className="search-bar">
