@@ -119,7 +119,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                  { countryDataDiff ? `+${countryDataDiff.new_cases} (+${countryDataDiff.new_cases_percentage}%)` : null }
+                  { countryDataDiff ? `+${countryDataDiff.new_cases}` : null }
                 </span>
               </span>
               <h3>Confirmed</h3>
@@ -133,7 +133,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                  { countryDataDiff ? `+${countryDataDiff.new_recovered} (+${countryDataDiff.new_recovered_percentage}%)` : null }
+                  { countryDataDiff ? `+${countryDataDiff.new_recovered}` : null }
                 </span>
               </span>
               <h3>Recovered</h3>
@@ -141,7 +141,7 @@ class SelectedCountryOverview extends Component {
           </div>
           <div className="statistic-group">
             <div className="statistic deaths">
-              <span>
+              <span className="select">
                 <CountUp
                   start={0}
                   end={countryData.deaths}
@@ -149,7 +149,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                { countryDataDiff ? `+${countryDataDiff.new_deaths} (+${countryDataDiff.new_deaths_percentage}%)` : null }
+                { countryDataDiff ? `+${countryDataDiff.new_deaths}` : null }
                 </span>
               </span>
               <h3>Deaths</h3>
