@@ -1,46 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import countries from '../countryList';
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      countryList: null,
-    };
-  }
+const SearchBar = ({ setParentState }) => {
+  const [countryList, setCountryList] = useState(countries);
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     countryList: null,
+  //   };
+  // }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.fetchCountryList();
-    }, 2000);
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.fetchCountryList();
+  //   }, 2000);
+  // }
 
-  fetchCountryList() {
-    fetch('/api/countries')
-      .then(response => response.text())
-      .then(data => JSON.parse(data))
-      .then(countries => countries.map(cntry => cntry.name))
-      .then(filtered => this.setState({ countryList: filtered }))
-      .catch(err => console.log(err));
-  }
+  // remove fetch, use DB
+  // fetchCountryList() {
+  //   fetch('/api/countries')
+  //     .then(response => response.text())
+  //     .then(data => JSON.parse(data))
+  //     .then(countries => countries.map(cntry => cntry.name))
+  //     .then(filtered => this.setState({ countryList: filtered }))
+  //     .catch(err => console.log(err));
+  // }
 
-  handleSelectChange(event) {
+  const handleSelectChange = event => {
     const { value } = event.target;
-    const { setParentState } = this.props;
+    // const { setParentState } = this.props;
     setParentState(value);
-  }
+  };
 
-  render() {
-    const { countryList } = this.state;
-    return (
-      <select name="country" id="country" onChange={event => this.handleSelectChange(event)}>
-        {countryList ? (
-          countryList.map(country => <option value={country}>{country}</option>)
-        ) : (
-          <h2>asd</h2>
-        )}
-      </select>
-    );
-  }
-}
+  // const { countryList } = this.state;
+  return (
+    <select
+      name="country"
+      id="country"
+      onChange={event => handleSelectChange(event)}
+    >
+      {countryList ? (
+        countryList.map(country => <option value={country.name}>{country.name}</option>)
+      ) : (
+        <h2>asd</h2>
+      )}
+    </select>
+  );
+};
 
 export default SearchBar;
