@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <>
         <SearchBar setParentState={this.childStateChangeHandler} />
-        <h1>hello, i am app</h1>
+        <h1>Global Overview</h1>
         <GlobalOverview />
         <SelectedCountryOverview selected={selectedCountry} />
       </>

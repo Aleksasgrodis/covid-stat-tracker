@@ -1,0 +1,30 @@
+.global-overview {
+  .statistic {
+    span {
+      font-size: 1.5em;
+    }
+    &.confirmed {
+      span {
+        color:white;
+      }
+    }
+    &.recovered {
+      span {
+        color:#b9ffb7;
+      }
+    }
+    &.deaths {
+      span {
+        color:#d62828;
+      }
+    }
+    &.critical {
+      span {
+        color:#f77f00;
+      }
+    }
+  }
+  .graph {
+    width: 80vw;
+  }
+}
