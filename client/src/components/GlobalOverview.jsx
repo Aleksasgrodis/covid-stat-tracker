@@ -3,9 +3,17 @@ import moment from 'moment';
 import CountUp from 'react-countup';
 import { Line } from 'react-chartjs-2';
 import PulseLoader from 'react-spinners/PulseLoader';
+import { css } from '@emotion/core';
 import netherlands from '../db';
 import diff from '../daily-diff';
 import './GlobalOverview.scss';
+
+const override = css`
+  display: block;
+  margin: 50px auto;
+  border-color: red;
+  width: 90px;
+`;
 
 const totalNewConfirmed = diff.map(a => a.new_cases).reduce((p, c) => p + c, 0);
 const totalNewRecovered = diff
@@ -207,7 +215,7 @@ class GlobalOverview extends React.Component {
         <div className="graph">{/* <Line data={data} options={{}} /> */}</div>
       </>
     ) : (
-      <PulseLoader />
+      <PulseLoader css={override} color="white" size={25} />
     );
   }
 }

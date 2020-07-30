@@ -41,13 +41,18 @@ class SelectedCountryOverview extends Component {
     this.props.resetSelect();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { selected } = this.props;
+    const { countryData, countryDataDiff } = this.state;
     if (this.props.selected !== this.state.country) {
+      console.log('new state homie');
       this.fetchCountryData(selected);
     }
-    if (this.state.countryData && !this.state.countryDataDiff) {
-      this.fetchCountryDailyDiff(this.state.countryData.code);
+    if (countryData && !countryDataDiff) {
+      this.fetchCountryDailyDiff(countryData.code);
+    }
+    if (countryData && countryDataDiff && countryData.code !== countryDataDiff.country) {
+      this.fetchCountryDailyDiff(countryData.code);
     }
   }
 
@@ -95,8 +100,8 @@ class SelectedCountryOverview extends Component {
                   countryData.recovered,
                   countryData.deaths,
                 ],
-                backgroundColor: ['#444', '#b9ffb7', '#d62828'],
-                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                backgroundColor: ['#aaa', '#b9ffb7', '#ff4f4f'],
+                hoverBackgroundColor: ['#fff', '#fff', '#fff'],
               },
             ],
           }}
