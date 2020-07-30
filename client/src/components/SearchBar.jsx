@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import countries from '../countryList';
@@ -14,7 +14,6 @@ function SearchBar({ setParentState }) {
   return (
     <div className="search-bar">
       <Autocomplete
-        onChange={event => console.log(event.target.value)}
         id="combo-box-demo"
         options={countries}
         style={{ borderRadius: 5 }}

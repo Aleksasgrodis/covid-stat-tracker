@@ -6,7 +6,7 @@ import { css } from '@emotion/core';
 import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 import './SelectedCountryOverview.scss';
 
-import { Doughnut, defaults, Pie } from 'react-chartjs-2';
+import { defaults, Doughnut } from 'react-chartjs-2';
 
 defaults.global.legend.display = false;
 
@@ -44,8 +44,7 @@ class SelectedCountryOverview extends Component {
   componentDidUpdate(prevProps) {
     const { selected } = this.props;
     const { countryData, countryDataDiff } = this.state;
-    if (this.props.selected !== this.state.country) {
-      console.log('new state homie');
+    if (selected !== this.state.country) {
       this.fetchCountryData(selected);
     }
     if (countryData && !countryDataDiff) {
@@ -57,7 +56,8 @@ class SelectedCountryOverview extends Component {
   }
 
   fetchCountryData(country) {
-    this.setState({ country: this.props.selected });
+    const { selected } = this.props;
+    this.setState({ country: selected });
     fetch(`/api/countries/${country}`)
       .then(response => response.text())
       .then(data => JSON.parse(data))
@@ -77,20 +77,21 @@ class SelectedCountryOverview extends Component {
 
   render() {
     const { countryData, countryDataDiff } = this.state;
+    const { resetSelect } = this.props;
     return countryData ? (
       <section className="global-overview selected">
         <h1>
-          <button onClick={event => this.props.resetSelect()}>
-            <i className="fa fa-angle-left" aria-hidden="true"></i>
+          <button type="submit" onClick={() => resetSelect()}>
+            <i className="fa fa-angle-left" aria-hidden="true" />
           </button>
           {countryData.country}
-          {' '+ getUnicodeFlagIcon(countryData.code)}
-          
+          &nbsp;
+          {getUnicodeFlagIcon(countryData.code)}
         </h1>
         <span className="last-update">
           {moment(countryData.lastChange).format('MMMM Do, HH:MM A')}
         </span>
-        <Pie
+        <Doughnut
           data={{
             labels: ['Confirmed', 'Recovered', 'Deaths'],
             datasets: [
@@ -119,7 +120,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                  { countryDataDiff ? `+${countryDataDiff.new_cases}` : null }
+                  { countryDataDiff && !countryDataDiff.error ? `+${countryDataDiff.new_cases}` : null }
                 </span>
               </span>
               <h3>Confirmed</h3>
@@ -133,7 +134,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                  { countryDataDiff ? `+${countryDataDiff.new_recovered}` : null }
+                  { countryDataDiff && !countryDataDiff.error ? `+${countryDataDiff.new_recovered}` : null }
                 </span>
               </span>
               <h3>Recovered</h3>
@@ -149,7 +150,7 @@ class SelectedCountryOverview extends Component {
                   separator=","
                 />
                 <span className="difference">
-                { countryDataDiff ? `+${countryDataDiff.new_deaths}` : null }
+                  { countryDataDiff && !countryDataDiff.error ? `+${countryDataDiff.new_deaths}` : null }
                 </span>
               </span>
               <h3>Deaths</h3>

@@ -20,7 +20,6 @@ class App extends Component {
     this.setState({
       selectedCountry: country,
     });
-  // console.log(`say something`);
   }
 
   resetSelectHandler() {
@@ -35,8 +34,12 @@ class App extends Component {
       <>
         <SearchBar setParentState={this.childStateChangeHandler} />
         { selectedCountry
-          ? <SelectedCountryOverview selected={selectedCountry}
-           resetSelect={this.resetSelectHandler}/>
+          ? (
+            <SelectedCountryOverview
+              selected={selectedCountry}
+              resetSelect={this.resetSelectHandler}
+            />
+          )
           : <GlobalOverview />}
         <NewsFeed />
       </>

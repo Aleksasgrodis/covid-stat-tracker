@@ -38,9 +38,11 @@ export default class NewsFeed extends React.Component {
               <article className="article">
                 <h5>{article.title}</h5>
                 <div className="details">
-                <span className="publisher">- {article.publisher}</span>
-                <span className="date">{moment(article.created).format('DD/MM/YYYY')}</span>
-
+                  <span className="publisher">
+                    -
+                    { article.publisher}
+                  </span>
+                  <span className="date">{moment(article.created).format('DD/MM/YYYY')}</span>
                 </div>
               </article>
             </a>
