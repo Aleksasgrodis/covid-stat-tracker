@@ -3,7 +3,6 @@ import GlobalOverview from './components/GlobalOverview';
 import SearchBar from './components/SearchBar';
 import SelectedCountryOverview from './components/SelectedCountryOverview';
 import NewsFeed from './components/NewsFeed';
-import logo from './logo.svg';
 import './App.scss';
 
 class App extends Component {
