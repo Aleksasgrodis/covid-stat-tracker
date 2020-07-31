@@ -58,12 +58,6 @@ app.get('/api/countries/:name', (req, res) => {
     });
 });
 
-// app.get('/api/news', (req, res) => {
-//   fetch(`http://newsapi.org/v2/top-headlines?q=Covid&from=2020-07-30&sortBy=popularity&apiKey=${process.env.NEWS_API_KEY}`)
-//     .then(response => response.json())
-//     .then(data => res.json(data));
-// })
-
 app.get('/api/news', async (req, res) => {
   try {
     const { items } = await googleNewsAPI.getNews(
@@ -71,9 +65,6 @@ app.get('/api/news', async (req, res) => {
       'covid',
       'en-GB',
     );
-    // const items = await items.filter((a, i) => i < 15);
-    
-
     res.json({
       articles: items.map(a => {
         const [ title, publisher ] = a.title.split(' - ');
@@ -89,10 +80,6 @@ app.get('/api/news', async (req, res) => {
     console.log(err);
     res.end();
   }
-
-  // fetch(`http://newsapi.org/v2/top-headlines?q=Covid&from=2020-07-30&sortBy=popularity&apiKey=${process.env.NEWS_API_KEY}`)
-  //   .then(response => response.json())
-  //   .then(data => res.json(data));
 });
 
 app.get('/api/diff/:country', (req, res) => {
