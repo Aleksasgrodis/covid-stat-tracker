@@ -58,7 +58,7 @@ class SelectedCountryOverview extends Component {
   fetchCountryData(country) {
     const { selected } = this.props;
     this.setState({ country: selected });
-    fetch(`/api/countries/${country}`)
+    fetch(`/api/countryStats/${country}`)
       .then(response => response.text())
       .then(data => JSON.parse(data))
       .then(countryStats => this.setState({ countryData: countryStats[0] }))
@@ -68,7 +68,7 @@ class SelectedCountryOverview extends Component {
   }
 
   fetchCountryDailyDiff(countryCode) {
-    fetch(`/api/diff/${countryCode}`)
+    fetch(`/api/countryDifference/${countryCode}`)
       .then(res => res.text())
       .then(ress => JSON.parse(ress))
       .then(data => this.setState({ countryDataDiff: data }))

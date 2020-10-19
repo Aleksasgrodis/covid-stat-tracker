@@ -34,10 +34,10 @@ class GlobalOverview extends React.Component {
   }
 
   fetchGlobalData() {
-    fetch('/api/total')
+    fetch('/api/totals')
       .then(response => response.text())
       .then(data => this.setState({ statistics: JSON.parse(data)[0] }))
-      .catch(err => console.log(err));
+      .catch(err => console.log('sent to error instead ', err));
   }
 
   render() {
@@ -77,9 +77,8 @@ class GlobalOverview extends React.Component {
               />
               <span className="difference">
                 {' '}
-                +{totalNewRecovered}&nbsp;
-                (+
-                { ((totalNewRecovered * 100) / statistics.recovered)
+                +{totalNewRecovered}&nbsp; (+
+                {((totalNewRecovered * 100) / statistics.recovered)
                   .toString()
                   .substr(0, 4)}
                 %)
@@ -98,9 +97,8 @@ class GlobalOverview extends React.Component {
                 />
                 <span className="difference">
                   {' '}
-                  +{totalNewDeaths}&nbsp;
-                   (+
-                  { ((totalNewDeaths * 100) / statistics.deaths)
+                  +{totalNewDeaths}&nbsp; (+
+                  {((totalNewDeaths * 100) / statistics.deaths)
                     .toString()
                     .substr(0, 4)}
                   %)
