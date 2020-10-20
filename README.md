@@ -2,8 +2,9 @@
 
 # **Covid Statistics Tracker**
 
-Your one stop shop for the latest statistics and news on the ongoing pandemic.
+Your one stop shop for the latest statistics and news on the ongoing pandemic. For the most optimal experience, view the project in responsive mode on desktop or a mobile device.
 
+[Live Demo](https://covidstattrak.vercel.app/)
 
 ### `The Goal`
 
@@ -16,8 +17,23 @@ The idea is pretty straightforward. It will be a webapp displaying global Covid1
 
 | Server Side | Client Side |
 | :---- | -: |
-| NodeJS | ReactJS | 
-| Express | ChartJS | 
+| ~~NodeJS~~ | ReactJS | 
+| ~~Express~~ | ChartJS | 
 | [Covid API](https://covid-19-data.p.rapidapi.com)  | Sass |
 
 *subject to change
+
+### Versions
+Dedicated back & front-end on the master branch. Serverless version (the one that is live) on the serverless branch.
+
+### Features
+- [x] Global Statistics
+- [x] Filter By Country
+- [x] Daily Difference Statistic (Global & Individual Countries)
+- [x] Global Newsfeed
+- [x] Visual Donut Chart  
+- [ ] Desktop User Interface (Responsive across all types of devices)
+- [ ] Detailed Charts (Historic View)
+- [ ] News By Country Basis
+- [ ] Performance Enhancements (Faster API Calls)
+- [ ] Data Loading Indicators
